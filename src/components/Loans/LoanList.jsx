@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import loanService from "../services/loanService";
-import LoanDetailModal from "./Loans/modals/LoanDetailModal";
+import loanService from "../../services/loanService";
+import LoanDetailModal from "./modals/LoanDetailModal";
 import Swal from "sweetalert2";
 import "./LoanList.css";
 
@@ -116,6 +116,7 @@ const LoanList = ({ refreshTrigger, onStatusChange }) => {
       filterStatus === "all" || loan.estado === filterStatus;
     const matchesSearch =
       loan.solicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      loan.dniSolicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
       loan.equipo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       loan.correo.toLowerCase().includes(searchTerm.toLowerCase());
 
@@ -155,7 +156,7 @@ const LoanList = ({ refreshTrigger, onStatusChange }) => {
           <input
             type="text"
             id="search"
-            placeholder="Nombre, equipo o correo..."
+            placeholder="Nombre solicitante, documento, equipo o correo..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"

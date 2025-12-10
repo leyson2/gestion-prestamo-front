@@ -74,6 +74,10 @@ const LoanDetailModal = ({ loan, isOpen, onClose }) => {
                 <span className="detail-value">{loan.solicitante}</span>
               </div>
               <div className="detail-item">
+                <span className="detail-label">DNI:</span>
+                <span className="detail-value">{loan.dniSolicitante || 'N/A'}</span>
+              </div>
+              <div className="detail-item">
                 <span className="detail-label">Correo:</span>
                 <span className="detail-value">{loan.correo}</span>
               </div>

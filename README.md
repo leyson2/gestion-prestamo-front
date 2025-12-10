@@ -56,6 +56,10 @@ La aplicación estará disponible en `http://localhost:5173`
 - ✅ Eliminación de préstamos
 - ✅ Vista detallada de cada préstamo
 - ✅ Cambio de estado con comentarios obligatorios para devoluciones
+- ✅ Gestión completa de equipos (CRUD)
+- ✅ Navegación por rutas con React Router
+- ✅ Paginación en listado de equipos
+- ✅ Validación de DNI de solicitantes
 - ✅ Validaciones de formulario
 - ✅ Alertas interactivas con SweetAlert2
 
@@ -64,10 +68,18 @@ La aplicación estará disponible en `http://localhost:5173`
 ```
 src/
 ├── components/          # Componentes React
-│   ├── LoanForm.jsx    # Formulario de registro
+│   ├── LoanForm.jsx    # Formulario de registro de préstamos
 │   ├── LoanList.jsx    # Lista de préstamos
 │   ├── StatusModal.jsx # Modal de actualización
-│   └── LoanDetailModal.jsx # Modal de detalles
+│   ├── LoanDetailModal.jsx # Modal de detalles
+│   ├── Navigation.jsx  # Barra de navegación
+│   ├── Pagination.jsx  # Componente de paginación
+│   └── Equipments/     # Componentes de equipos
+│       ├── EquipmentForm.jsx  # Formulario de equipos
+│       └── EquipmentList.jsx  # Lista de equipos
+├── pages/              # Páginas/Vistas
+│   ├── LoansPage.jsx   # Vista de préstamos
+│   └── EquipmentPage.jsx # Vista de equipos
 ├── services/           # Servicios de API
 │   ├── loanService.js
 │   └── equipmentService.js
@@ -78,19 +90,29 @@ src/
 
 - **React 19** - Librería de UI
 - **Vite** - Build tool y dev server
+- **React Router DOM** - Navegación entre páginas
 - **SweetAlert2** - Alertas y modales interactivos
 - **CSS3** - Estilos personalizados
+
+## Rutas de la Aplicación
+
+- `/` - Página principal (Gestión de Préstamos)
+- `/equipos` - Gestión de Equipos
 
 ## Conexión con el Backend
 
 Asegúrate de que el backend esté corriendo en la URL especificada en `VITE_API_BASE_URL`. El frontend consume los siguientes endpoints:
 
+### Préstamos
 - `GET /api/prestamos/` - Obtener todos los préstamos
 - `POST /api/prestamos/` - Crear un préstamo
 - `GET /api/prestamos/{id}/` - Obtener un préstamo
 - `PUT /api/prestamos/{id}/` - Actualizar préstamo completo
 - `PATCH /api/prestamos/cambiar-estado/{id}` - Cambiar estado del préstamo
 - `DELETE /api/prestamos/{id}/` - Eliminar préstamo
+
+### Equipos
 - `GET /api/equipos/` - Obtener lista de equipos
+- `POST /api/equipos/` - Crear un equipo
 
 

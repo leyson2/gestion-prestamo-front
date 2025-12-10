@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import loanService from '../services/loanService';
-import equipmentService from '../services/equipmentService';
+import loanService from '../../../services/loanService';
+import equipmentService from '../../../services/equipmentService';
 import './StatusModal.css';
 
 const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
   const [mode, setMode] = useState('status'); 
   const [formData, setFormData] = useState({
     solicitante: '',
+    dniSolicitante: '',
     correo: '',
     equipoCode: '',
     estado: '',
@@ -32,6 +33,7 @@ const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
     if (isOpen && loan) {
       setFormData({
         solicitante: loan.solicitante || '',
+        dniSolicitante: loan.dniSolicitante || '',
         correo: loan.correo || '',
         equipoCode: loan.equipoCode || '',
         estado: loan.estado || '',
@@ -89,6 +91,10 @@ const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
       // Validar todos los campos para actualización completa
       if (!formData.solicitante.trim()) {
         newErrors.solicitante = 'El nombre es obligatorio';
+      }
+
+      if (!formData.dniSolicitante.trim()) {
+        newErrors.dniSolicitante = 'El DNI es obligatorio';
       }
 
       if (!formData.correo.trim()) {
@@ -155,6 +161,7 @@ const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
         // Actualizar todos los datos
         const updateData = {
           solicitante: formData.solicitante.trim(),
+          dniSolicitante: formData.dniSolicitante.trim(),
           correo: formData.correo.trim(),
           equipoCode: formData.equipoCode,
           estado: formData.estado,
@@ -183,6 +190,7 @@ const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
     if (!loading) {
       setFormData({
         solicitante: '',
+        dniSolicitante: '',
         correo: '',
         equipoCode: '',
         estado: '',
@@ -293,6 +301,25 @@ const StatusModal = ({ loan, isOpen, onClose, onStatusUpdated }) => {
                   />
                   {errors.solicitante && (
                     <span className="error-message">{errors.solicitante}</span>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="dniSolicitante">
+                    DNI <span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="dniSolicitante"
+                    name="dniSolicitante"
+                    value={formData.dniSolicitante}
+                    onChange={handleChange}
+                    className={errors.dniSolicitante ? 'error' : ''}
+                    placeholder="DNI del solicitante"
+                    disabled={loading}
+                  />
+                  {errors.dniSolicitante && (
+                    <span className="error-message">{errors.dniSolicitante}</span>
                   )}
                 </div>
 

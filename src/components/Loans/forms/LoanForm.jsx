@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import loanService from '../services/loanService';
-import equipmentService from '../services/equipmentService';
+import loanService from '../../../services/loanService';
+import equipmentService from '../../../services/equipmentService';
 
 import './LoanForm.css';
 
 const LoanForm = ({ onLoanCreated }) => {
   const [formData, setFormData] = useState({
     solicitante: '',
+    dniSolicitante: '',
     correo: '',
     equipoCode: '',
     estado: 'SOLICITADO',
@@ -41,6 +42,11 @@ const LoanForm = ({ onLoanCreated }) => {
       newErrors.solicitante = 'El nombre es obligatorio';
     }  
 
+    // Validar DNI
+    if (!formData.dniSolicitante.trim()) {
+      newErrors.dniSolicitante = 'El DNI es obligatorio';
+    }
+
     // Validar correo
     if (!formData.correo.trim()) {
       newErrors.correo = 'El correo es obligatorio';
@@ -55,9 +61,8 @@ const LoanForm = ({ onLoanCreated }) => {
     if (!formData.fecha_prestamo) {
       newErrors.fecha_prestamo = 'La fecha es obligatoria';
     } else {
-      const selectedDate = new Date(formData.fecha_prestamo);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const selectedDate = formData.fecha_prestamo; // formato 'YYYY-MM-DD'
+      const today = new Date().toISOString().split('T')[0]; // formato 'YYYY-MM-DD'
       
       if (selectedDate < today) {
         newErrors.fecha_prestamo = 'La fecha no puede ser anterior a hoy';
@@ -111,6 +116,7 @@ const LoanForm = ({ onLoanCreated }) => {
 
       setFormData({
         solicitante: '',
+        dniSolicitante: '',
         correo: '',
         equipoCode: '',
         estado: 'SOLICITADO',
@@ -166,6 +172,23 @@ const LoanForm = ({ onLoanCreated }) => {
             disabled={loading}
           />
           {errors.solicitante && <span className="error-message">{errors.solicitante}</span>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="dniSolicitante">
+            DNI del solicitante <span className="required">*</span>
+          </label>
+          <input
+            type="text"
+            id="dniSolicitante"
+            name="dniSolicitante"
+            value={formData.dniSolicitante}
+            onChange={handleChange}
+            className={errors.dniSolicitante ? 'error' : ''}
+            placeholder="Ingrese el DNI"
+            disabled={loading}
+          />
+          {errors.dniSolicitante && <span className="error-message">{errors.dniSolicitante}</span>}
         </div>
 
         <div className="form-group">

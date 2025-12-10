@@ -26,6 +26,23 @@ const equipmentService = {
     }
   },
 
+  createEquipment: async (equitData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/equipos/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(equitData),
+      });
+      const data = await response.json();
+      return await handleResponse(data);
+    } catch (error) {
+      console.error('Error al crear el equipo:', error);
+      throw error;
+    }
+  },
+
 }
 
 export default equipmentService;
